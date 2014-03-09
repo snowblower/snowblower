@@ -7,20 +7,20 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-//inefficient method
-public class Solution {
+//better way
+public class Solution { 
+    private boolean result;
     public boolean isBalanced(TreeNode root) {
-        if(root==null){return true;}
-        if(Math.abs(max(root.left)-max(root.right))>1) return false;
-        boolean left = isBalanced(root.left);
-        boolean right = isBalanced(root.right);
-        return left&&right;
+        result = true;
+        helper(root);
+        return result;
     }
     
-    public int max(TreeNode root){
-        if(root==null){return 0;}
-        int left = max(root.left)+1;
-        int right = max(root.right)+1;
-        return Math.max(left,right);
+    public int helper(TreeNode root){
+        if(root==null) return 0;
+        int left =helper(root.left);
+        int right = helper(root.right);
+        if(Math.abs(left-right)>1) result = false;
+        return Math.max(left+1,right+1);
     }
 }
