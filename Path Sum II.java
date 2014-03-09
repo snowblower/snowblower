@@ -11,27 +11,19 @@ public class Solution {
     public ArrayList<ArrayList<Integer>> pathSum(TreeNode root, int sum) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
         ArrayList<Integer> list = new ArrayList<Integer>();
-        if(root==null){return result;}
-        pathSumHelper(root,result,list,sum,0);
+        helper(root,sum,result,list);
         return result;
     }
     
-    public void pathSumHelper(TreeNode root,ArrayList<ArrayList<Integer>> result,ArrayList<Integer> list,int sum,int level){
-        if(root==null){return;}
-        if(root.left==null&&root.right==null){
-            if(root.val==sum){
-                ArrayList<Integer> arr = new ArrayList<Integer>(list);
-                arr.add(root.val);
-                result.add(arr);
-                return;
-            }
-            else return;    
+    public void helper(TreeNode root, int sum, ArrayList<ArrayList<Integer>> result,ArrayList<Integer> list){
+        if(root==null) return;
+        ArrayList<Integer> curr = new ArrayList<Integer>(list);
+        curr.add(root.val);
+        if(root.left==null&&root.right==null&&sum==root.val){
+            result.add(curr);
+            return;
         }
-        list.add(root.val);
-        sum=sum-root.val;
-        pathSumHelper(root.left,result,list,sum,level+1);
-        pathSumHelper(root.right,result,list,sum,level+1);
-        list.remove(level);
-        return;
+        helper(root.left,sum-root.val,result,curr);
+        helper(root.right,sum-root.val,result,curr);  
     }
 }
