@@ -7,25 +7,17 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-//old version
+//short
 public class Solution {
     public TreeNode sortedArrayToBST(int[] num) {
-        TreeNode root = creatTree(num);
-        return root;
+        return helper(num,0,num.length);
     }
-    
-    public TreeNode creatTree(int[] num){
-        if(num.length==0){
-            return null;
-        }
-        if(num.length==1){
-            TreeNode node = new TreeNode(num[0]);
-            return node;
-        }
-        int curr = num[num.length/2];
-        TreeNode node = new TreeNode(curr);
-        node.left=creatTree(Arrays.copyOfRange(num,0,num.length/2));
-        node.right=creatTree(Arrays.copyOfRange(num,num.length/2+1,num.length));
-        return node;
+    public TreeNode helper(int[] num,int start,int end){
+        if(start>=end) return null;
+        int mid = (start+end)/2;
+        TreeNode curr = new TreeNode(num[mid]);
+        curr.left = helper(num,start,mid);
+        curr.right = helper(num,mid+1,end);
+        return curr;
     }
 }
