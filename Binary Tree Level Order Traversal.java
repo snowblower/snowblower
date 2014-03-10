@@ -7,33 +7,23 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+ //preorder 
 public class Solution {
     public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
-        ArrayList<ArrayList<Integer>> result =new ArrayList<ArrayList<Integer>>();
-        ArrayList<TreeNode> list = new ArrayList<TreeNode>();
-        ArrayList<Integer> list_int = new ArrayList<Integer>();
-        if(root==null)return result;
-        list.add(root);
-        list_int.add(root.val);
-        result.add(list_int);
-        while(!list.isEmpty()){
-            ArrayList<TreeNode> curr = new ArrayList<TreeNode>();
-            ArrayList<Integer> curr_int =new ArrayList<Integer>();
-            for(TreeNode n :list){
-                if(n.left!=null){
-                    curr.add(n.left);
-                    curr_int.add(n.left.val);
-                }
-                if(n.right!=null){
-                    curr.add(n.right);
-                    curr_int.add(n.right.val);
-                }
-            }
-            if(!curr_int.isEmpty()){
-                result.add(curr_int);
-            }
-            list=curr;
-        }
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if(root==null) return result;
+        helper(result,1,root);
         return result;
+    }
+    
+    public void helper(ArrayList<ArrayList<Integer>> result, int num,TreeNode root){
+        if(root==null) return;
+        while(result.size()<num){
+            ArrayList<Integer> curr = new ArrayList<Integer>();
+            result.add(curr);
+        }
+        result.get(num-1).add(root.val);
+        helper(result,num+1,root.left);
+        helper(result,num+1,root.right);
     }
 }
